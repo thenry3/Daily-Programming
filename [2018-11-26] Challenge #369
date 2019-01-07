@@ -1,0 +1,44 @@
+colors = [[255, 99, 71],
+          [184, 134, 11],
+          [189, 183, 107],
+          [0, 0, 205]]
+
+test_blend = [["#000000", "#778899"],
+              ["#E6E6FA", "#FF69B4", "#B0C4DE"]]
+
+hexkey = {0: "0", 1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8", 9: "9",
+          10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F"}
+def hexcolor(rgb):
+    hexcode = ["#"]
+    for a in rgb:
+        hexcode.append(str(hexkey[int(a / 16)]))
+        hexcode.append(str(hexkey[a % 16]))
+    return hexcode
+
+def hexcode(hex):
+    inv_hexkey = {v: k for k, v in hexkey.items()}
+    code = [inv_hexkey[a] for a in list(hex) if a != "#"]
+    hexnum = []
+    for a in range(3):
+        hexnum.append(code[2 * a] * 16 + code[2 * a + 1])
+    return hexnum
+
+def blend(hexlist):
+    converted_hexlist = []
+    avg = []
+    for x in hexlist:
+        converted_hexlist.append(hexcode(x))
+    for i in range(3):
+        topsum = 0
+        for x in converted_hexlist:
+            topsum += x[i]
+        avg.append(round(topsum/len(converted_hexlist)))
+    return hexcolor(avg)
+
+for n in colors:
+    print(n, "=>", "".join(hexcolor(n)))
+
+print("\n")
+
+for n in test_blend:
+    print(n, "=>", "".join(blend(n)))
