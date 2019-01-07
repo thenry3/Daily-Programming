@@ -1,0 +1,17 @@
+test_upc = [4210000526,
+            3600029145,
+            12345678910,
+            1234567]
+
+def upc(number):
+    digits = [int(i) for i in str(number).zfill(11)]
+    m = (sum(digits[::2]) * 3 + sum(digits[1::2])) % 10
+    if m != 0:
+        checkdigit = 10 - m
+    else:
+        checkdigit = m
+    return checkdigit
+
+
+for n in test_upc:
+    print(n, "=>", upc(n))
